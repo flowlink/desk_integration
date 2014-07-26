@@ -23,6 +23,7 @@ class Client
       body: case_params.to_json,
       basic_auth: auth
     }
+
     response = self.class.post("#{config['desk_url']}/api/v2/cases", options)
     if validate_response(response)
       response
@@ -49,7 +50,7 @@ class Client
       basic_auth: auth,
       body: {
         first_name: "Spree Commerce",
-        last_name: "Hub",
+        last_name: "Wombat",
         emails: [
           {
             type: "work",
@@ -93,7 +94,7 @@ class Client
     {
       direction: 'in',
       to: config['desk_to_email'],
-      from: "#{config['desk_requester_name']} (#{config['desk_requester_email']})",
+      from: config['desk_requester_email'],
       subject: payload['subject'],
       body: payload['description'],
       status: "received"
