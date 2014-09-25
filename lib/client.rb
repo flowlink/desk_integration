@@ -24,7 +24,8 @@ class Client
       basic_auth: auth
     }
 
-    response = self.class.post("#{config['desk_url']}/api/v2/cases", options)
+    response = self.class.post desk_url('/api/v2/cases'), options
+
     if validate_response(response)
       response
     end
@@ -35,7 +36,9 @@ class Client
       basic_auth: auth,
       body: { email: config['desk_customer_email'] }.to_json
     }
-    response = self.class.get("#{config['desk_url']}/api/v2/customers/search", options)
+
+    response = self.class.get desk_url('/api/v2/customers/search'), options
+
     if validate_response(response)
       begin
         response["_embedded"]["entries"].first["_links"]["self"]["href"]
@@ -59,13 +62,23 @@ class Client
         ]
       }.to_json
     }
-    response = self.class.post("#{config['desk_url']}/api/v2/customers", options)
+
+    response = self.class.post desk_url('/api/v2/customers'), options
+
     if validate_response(response)
       response["_links"]["self"]["href"]
     end
   end
 
   private
+
+  def desk_url(path)
+    unless config['desk_url'] =~ /^https?\:\/\//
+      config['desk_url'] = "https://#{config['desk_url']}"
+    end
+
+    "#{config['desk_url']}#{path}"
+  end
 
   def validate_response(response)
     if response['message'].present?
