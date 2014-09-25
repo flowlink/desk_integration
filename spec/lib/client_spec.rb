@@ -20,6 +20,15 @@ describe Client do
   end
 
   describe "#get_customer" do
+    it 'adds protocol when not available `desk_url`' do
+      configuration['desk_url'] = 'spreecommerce.desk.com'
+
+      VCR.use_cassette('get_customer_exists') do
+        response = subject.get_customer
+        response.should =~ /api\/v2\/customers/
+      end
+    end
+
     it "returns the customer url if they exist" do
       configuration['desk_customer_email'] = 'hub@spreecommerce.com'
       VCR.use_cassette('get_customer_exists') do
