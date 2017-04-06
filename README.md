@@ -3,7 +3,7 @@
 
 This is a fully hosted and supported integration for use with the [FlowLink](http://flowlink.io/) product. With this integration you can perform the following functions:
 
-* Creates support tickets in Desk.com if there is an error notification in Wombat.
+* Creates support tickets in Desk.com if there is an error notification in FlowLink.
 
 # About FlowLink
 
